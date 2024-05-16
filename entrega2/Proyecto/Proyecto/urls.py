@@ -1,4 +1,5 @@
 from django.urls import path, include
+from django.contrib import admin
 
 """
 URL configuration for Proyecto project.
@@ -17,7 +18,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('EasyFood.urls')),
+    path('admin/', admin.site.urls)
     # Add more URL patterns as needed
 ]
