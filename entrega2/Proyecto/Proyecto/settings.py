@@ -80,7 +80,7 @@ DATABASES = {
         'USER': 'grupo8',
         'PASSWORD': 'bulla8',
         'HOST': 'pavlov.ing.puc.cl',  # e.g., 'db.example.com' or IP address
-        'PORT': '22',  # e.g., '5432'
+        'PORT': '5432',  # e.g., '5432'
     }
 }
 
