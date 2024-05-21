@@ -31,6 +31,7 @@ __pycache__
 # Ignore dependencies
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 node_modules/
 =======
 node_modules/
@@ -70,3 +71,6 @@ __pycache__
 # Ignore dependencies
 node_modules/
 >>>>>>> 27a698b (merge)
+=======
+node_modules/
+>>>>>>> 13286cf (avance)
