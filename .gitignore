@@ -29,4 +29,8 @@ __pycache__
 .idea/
 
 # Ignore dependencies
+<<<<<<< HEAD
 node_modules/
+=======
+node_modules/
+>>>>>>> 13286cf (avance)
