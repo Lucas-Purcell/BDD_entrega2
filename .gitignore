@@ -1,0 +1,32 @@
+# Ignore Python byte-compiled files
+*.pyc
+__pycache__
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore environment-specific files
+.env
+
+# Ignore compiled files
+*.exe
+*.o
+*.out
+*.dll
+
+# Ignore log files
+*.log
+
+# Ignore package files
+*.zip
+*.tar.gz
+
+# Ignore database files
+*.db
+
+# Ignore IDE or editor-specific files
+.vscode/
+.idea/
+
+# Ignore dependencies
+node_modules/
