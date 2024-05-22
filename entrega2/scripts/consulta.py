@@ -46,3 +46,14 @@ def consulta8():
         WHERE Plato.disponibilidad = TRUE
         AND Restaurant.vigente = TRUE"""
     return query
+
+
+#Dado una un alergeno ingresado por el usuario (string), muestre todos los platos que lo contengan en sus ingredientes (Ejemplo: maní)
+def consulta10():
+    query = """SELECT Restaurant.id, Restaurant.nombre, Restaurant.sucursal, Plato.nombre 
+        FROM Plato
+        JOIN Platorestaurant ON Plato.id = Platorestaurant.plato_id 
+        JOIN Restaurant ON Platorestaurant.restaurant_id = Restaurant.id
+        WHERE Plato.ingredientes LIKE %(alergeno)s 
+        AND Plato.disponibilidad = TRUE"""
+    return query
