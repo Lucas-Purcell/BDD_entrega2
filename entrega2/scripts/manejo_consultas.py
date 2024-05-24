@@ -64,16 +64,16 @@ def consultas(numero_consulta, **kwargs):
         #     except (Exception, Error) as error:
         #         print("Error al ejecutar query:", error)
 
-        # if numero_consulta == 4:
-        #     try:
-        #         query = consulta4()
-        #         estilo = kwargs.get('estilo')
-        #         cursor.execute(query, {'estilo': estilo})
-        #         rows = cursor.fetchall()
-        #         for row in rows:
-        #             print(row)
-        #     except (Exception, Error) as error:
-        #         print("Error al ejecutar query:", error)
+        if numero_consulta == 4:
+            try:
+                query = consulta4()
+                estilo = kwargs.get('estilo')
+                cursor.execute(query, {'estilo': estilo})
+                rows = cursor.fetchall()
+                for row in rows:
+                    print(row)
+            except (Exception, Error) as error:
+                print("Error al ejecutar query:", error)
 
         if numero_consulta == 5:
             try:
