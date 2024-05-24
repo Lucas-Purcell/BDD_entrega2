@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2 import sql
 from psycopg2 import Error
-from consultas import (consulta1, consulta5, consulta8, consulta10)
+from consultas import (consulta1, consulta4, consulta5, consulta8, consulta10)
 
 #para conectarse a la base
 DB_HOST = 'pavlov.ing.puc.cl'
