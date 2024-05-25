@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2 import sql
 from psycopg2 import Error
-from consultas import (consulta1, consulta4, consulta5, consulta8, consulta10)
+from consultas import (consulta1, consulta4, consulta5, consulta6, consulta8, consulta9, consulta10)
 
 #para conectarse a la base
 DB_HOST = 'pavlov.ing.puc.cl'
@@ -86,16 +86,16 @@ def consultas(numero_consulta, **kwargs):
             except (Exception, Error) as error:
                 print("Error al ejecutar query:", error)
 
-        # if numero_consulta == 6:
-        #     try:
-        #         query = consulta6()
-        #         email = kwargs.get('email')
-        #         cursor.execute(query, {'email': email})
-        #         rows = cursor.fetchall()
-        #         for row in rows:
-        #             print(row)
-        #     except (Exception, Error) as error:
-        #         print("Error al ejecutar query:", error)
+        if numero_consulta == 6:
+            try:
+                query = consulta6()
+                email = kwargs.get('email')
+                cursor.execute(query, {'email': email})
+                rows = cursor.fetchall()
+                for row in rows:
+                    print(row)
+            except (Exception, Error) as error:
+                print("Error al ejecutar query:", error)
 
         # if numero_consulta == 7:
         #     try:
@@ -117,17 +117,17 @@ def consultas(numero_consulta, **kwargs):
             except (Exception, Error) as error:
                 print("Error al ejecutar query:", error)
         
-        # if numero_consulta == 9:
-        #     try:
-        #         tipo = kwargs.get('tipo')
-        #         query = consulta9(tipo)
-        #         numero = kwargs.get('numero')
-        #         cursor.execute(query, {'numero': numero})
-        #         rows = cursor.fetchall()
-        #         for row in rows:
-        #             print(row)
-        #     except (Exception, Error) as error:
-        #         print("Error al ejecutar query:", error)
+        if numero_consulta == 9:
+            try:
+                tipo = kwargs.get('tipo')
+                query = consulta9(tipo)
+                numero = kwargs.get('numero')
+                cursor.execute(query, {'numero': numero})
+                rows = cursor.fetchall()
+                for row in rows:
+                    print(row)
+            except (Exception, Error) as error:
+                print("Error al ejecutar query:", error)
 
         if numero_consulta == 10:
             try:
