@@ -19,7 +19,13 @@
         h1 {
             color: #333;
             text-align: center;
-            font-size: 36px;
+            font-size: 40px;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 20px;
+            margin-top: 20px;
         }
 
         p {
@@ -45,6 +51,61 @@
             background-color: #ddd;
             color: black;
         }
+        .query-form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .query-form label, .query-form input, .query-form select, .query-form button {
+            display: block;
+            margin: 10px auto;
+        }
+
+        .query-form input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .query-form select {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 424px; 
+        }
+
+        .query-form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .query-form button:hover {
+            background-color: #555;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
@@ -56,7 +117,121 @@
 
 <div class="container">
     <h1>Consultas Predeterminadas</h1>
-    <p>Esta es la página de 10 consultas.</p>
+    
+    <!--consulta 1 -->
+    <h2>1. Restaurantes que ofrecen un plato específico y que está disponible</h2>
+    <div class="query-form">
+        <form method="post">
+            {% csrf_token %}
+            <label for="nombre">Ingrese nombre del plato:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <button type="submit" name="query" value="1">Ejecutar Consulta</button>
+        </form>
+    </div>
+
+    <!-- consulta 2 -->
+    <h2>2. Pedidos concretados por usuario específico durante mes espefícico y el gasto mensual</h2>
+    <div class="query-form">
+        <form method="post">
+            {% csrf_token %}
+            <label for="email">Ingrese email del usuario:</label>
+            <input type="text" id="email" name="email" required>
+            <label for="men">Ingrese mes a consultar:</label>
+            <input type="text" id="mes" name="mes" required>
+            <label for="anho">Ingrese año a consultar:</label>
+            <input type="text" id="anho" name="anho" required>
+            <button type="submit" name="query" value="2">Ejecutar Consulta</button>
+        </form>
+    </div>
+
+    <!-- consulta 3 -->
+    <h2>3. Pedidos concretados/cancelados y el valor total de cada uno</h2>
+    <div class="query-form">
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="query" value="3">Ejecutar Consulta</button>
+        </form>
+    </div>
+
+    <!--consulta 4 -->
+    <h2>4. Platos, restaurantes y opciones de delivery para un estilo de plato específico</h2>
+    <div class="query-form">
+        <form method="post">
+            {% csrf_token %}
+            <label for="estilo">Ingrese estilo del plato:</label>
+            <input type="text" id="estilo" name="estilo" required>
+            <button type="submit" name="query" value="4">Ejecutar Consulta</button>
+        </form>
+    </div>
+
+    <!--consulta 5 -->
+    <h2>5. Platos y sus restricciones para un estilo de plato específico</h2>
+    <div class="query-form">
+        <form method="post">
+            {% csrf_token %}
+            <label for="estilo">Ingrese estilo del plato:</label>
+            <input type="text" id="estilo" name="estilo" required>
+            <button type="submit" name="query" value="5">Ejecutar Consulta</button>
+        </form>
+    </div>
+
+    <!--consulta 6 -->
+    <h2>6. Restaurantes a los que un usuario específico tiene acceso dado sus planes de suscripción</h2>
+    <div class="query-form">
+        <form method="post">
+            {% csrf_token %}
+            <label for="email">Ingrese email del usuario:</label>
+            <input type="text" id="email" name="email" required>
+            <button type="submit" name="query" value="5">Ejecutar Consulta</button>
+        </form>
+    </div>
+
+    <!--consulta 7 -->
+    <h2>7. Dinero gastado por cada cliente en pedidos no incluídos en sus planes de suscripción</h2>
+    <div class="query-form">
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="query" value="7">Ejecutar Consulta</button>
+        </form>
+    </div>
+
+    <!--consulta 8 -->
+    <h2>8. Platos y los restaurantes que los ofrecen</h2>
+    <div class="query-form">
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="query" value="8">Ejecutar Consulta</button>
+        </form>
+    </div>
+
+    <!--consulta 9 -->
+    <h2>9. Evaluaciones de cliente, despachador o servicio de delivery iguales o mayores a una puntuación específica (1-5)</h2>
+    <div class="query-form">
+        <form method="post">
+            {% csrf_token %}
+            <label for="numero">Ingrese puntuación:</label>
+            <input type="text" id="numero" name="numero" required>
+            <label for="tipo">Seleccione una opción:</label>
+            <select id="tipo" name="tipo">
+                <option value="cliente">Cliente</option>
+                <option value="despachador">Despachador</option>
+                <option value="delivery">Delivery</option>
+            </select>
+            <button type="submit" name="query" value="9">Ejecutar Consulta</button>
+        </form>
+    </div>
+
+    <!--consulta 10 -->
+    <h2>10. Platos que contienen alergeno específico</h2>
+    <div class="query-form">
+        <form method="post">
+            {% csrf_token %}
+            <label for="alergeno">Ingrese alergeno:</label>
+            <input type="text" id="alergeno" name="alergeno" required>
+            <button type="submit" name="query" value="10">Ejecutar Consulta</button>
+        </form>
+    </div>
+    
 </div>
 
 </body>
