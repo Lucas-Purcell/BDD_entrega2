@@ -2,62 +2,53 @@ import psycopg2
 from psycopg2 import sql
 from psycopg2 import Error
 import crypt
-DB_HOST = 'pavlov.ing.puc.cl'
-DB_PORT = '5432'
-DB_USER = 'grupo8'
-DB_PASSWORD = 'bulla8'
-DB_NAME = 'grupo8e2'
 
-conn = None
-cursor = None
+def restaurant():  
+    DB_HOST = 'pavlov.ing.puc.cl'
+    DB_PORT = '5432'
+    DB_USER = 'grupo8'
+    DB_PASSWORD = 'bulla8'
+    DB_NAME = 'grupo8e2'
 
-table_name = "restaurant"
+    conn = None
+    cursor = None
+    error_msg = ["Tabla Restaurant:"]
 
-try:
-    # Conexión con la base de datos
-    conn = psycopg2.connect(
-        user=DB_USER,
-        password=DB_PASSWORD,
-        host=DB_HOST,
-        port=DB_PORT,
-        dbname=DB_NAME
-    )
-    # Crear un cursor para ejecutar consultas
-    cursor = conn.cursor()
+    try:
+        # Conexión con la base de datos
+        conn = psycopg2.connect(
+            user=DB_USER,
+            password=DB_PASSWORD,
+            host=DB_HOST,
+            port=DB_PORT,
+            dbname=DB_NAME
+        )
+        # Crear un cursor para ejecutar consultas
+        cursor = conn.cursor()
 
-    # Abrir CSV
-    with open('../CSV/restaurantes2.csv', 'r', encoding = 'ISO-8859-1') as file:
-        data = file.read().split('\n')
-        df = []
-        for line in data[1:]:
-            if len(line.split(';')[-2]) != 11:
-                clean = line.split(';')[:-2] + [line.split(';')[-2][:2] + line.split(';')[-2][3:]] + line.split(';')[-1:]
-                df.append(clean)
-            else:
+        # Abrir CSV
+        with open('../CSV/restaurantes2.csv', 'r',encoding= 'mac_roman') as file:
+            data = file.read().replace('√©', 'é').replace('√°', 'á').split('\n')
+            df = []
+            for line in data[1:]:
                 df.append(line.split(';'))
-        # Insertar datos en la tabla
-    
-    
-    exitos = 0
-    fallos = 0
-    for row in df:
-        try:
-            insert_query = """INSERT INTO Restaurant (nombre,vigente,estilo,repartomin,sucursal,direccion,telefono,area) 
-                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
-            cursor.execute(insert_query, row)
-            conn.commit()
-            exitos += 1
-        except(Exception, Error) as error:
-            fallos +=1
-            print(error)
+            # Insertar datos en la tabla
+        
+        for row in df:
+            try:
+                insert_query = """INSERT INTO Restaurant (nombre,vigente,estilo,repartomin,sucursal,direccion,telefono,area) 
+                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
+                cursor.execute(insert_query, row)
+                conn.commit()
+            except(Exception, Error) as error:
+                error_msg.append([error, row])
+                conn.rollback()
 
-    conn.commit()
-    print("Data loaded successfully in table {} for {} rows.".format(table_name, exitos))
-    print("Data loaded unsuccessfully in table {} for {} rows.".format(table_name, fallos))
-except (Exception, Error) as error:
-    print("Error loading data:", error)
-finally:
-    if cursor:
-        cursor.close()
-    if conn:
-        conn.close()
+    except (Exception, Error) as error:
+        error_msg.append(error)
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+    return error_msg
