@@ -92,7 +92,7 @@ def consultas_inestructuradas(request):
             elif not all(char.isalnum() or char in ('_', ' ') for char in tablas):
                 error_message = "Formato de tablas inválido."
             else:
-                query = f"SELECT {atributos} FROM {tablas}"
+                query = f"SELECT DISTINCT {atributos} FROM {tablas}"
                 if condiciones:
                     query += f" WHERE {condiciones}"
                 
