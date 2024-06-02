@@ -15,7 +15,6 @@ def usuario():
     error_msg = ["Tabla Usuario:"]
 
     try:
-        # Conexión con la base de datos
         conn = psycopg2.connect(
             user=DB_USER,
             password=DB_PASSWORD,
@@ -23,7 +22,6 @@ def usuario():
             port=DB_PORT,
             dbname=DB_NAME
         )
-
         cursor = conn.cursor()
 
 

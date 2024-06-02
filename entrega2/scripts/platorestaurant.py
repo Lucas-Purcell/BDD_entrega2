@@ -15,7 +15,6 @@ def platoRestaurant():
     error_msg = ["Tabla PlatoRestaurant:"]
 
     try:
-        # Conexión con la base de datos
         conn = psycopg2.connect(
             user=DB_USER,
             password=DB_PASSWORD,

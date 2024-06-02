@@ -22,7 +22,6 @@ def despachador():
             port=DB_PORT,
             dbname=DB_NAME
         )
-        # Crear un cursor para ejecutar consultas
         cursor = conn.cursor()
         
         with open('../CSV/cldeldes.csv', 'r', encoding = 'ISO-8859-1') as file:

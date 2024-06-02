@@ -16,7 +16,6 @@ from despacho import despacho
 from serviciodespacho import servicioDespacho
 
 def main():
-    # run each imported function and save output into a .txt file
     error_text = []
     error_text.append(restaurant())
     error_text.append(plato())

@@ -15,7 +15,6 @@ def empresa():
     error_msg = ["Tabla Empresa:"]
 
     try:
-        # Conexión con la base de datos
         conn = psycopg2.connect(
             user=DB_USER,
             password=DB_PASSWORD,
@@ -23,10 +22,8 @@ def empresa():
             port=DB_PORT,
             dbname=DB_NAME
         )
-        # Crear un cursor para ejecutar consultas
         cursor = conn.cursor()
 
-        # Abrir CSV
         with open('../CSV/cldeldes.csv', 'r', encoding = 'ISO-8859-1') as file:
             data = file.read().split('\n')
             df = []
