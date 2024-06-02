@@ -1,0 +1,34 @@
+Tabla Restaurant:
+Tabla Plato:
+Tabla Comuna:
+Tabla Empresa:
+Tabla Despachador:
+Tabla Usuario:
+new row for relation "usuario" violates check constraint "usuario_nombre_check"
+DETAIL:  Failing row contains (260, Ryan", Pablo.ORyan@bbdduc.utopia, 56942270623, .MGTHYo9GnhNM, cliente).
+	['Ryan"', 'Pablo.ORyan@bbdduc.utopia', '56942270623', '.MGTHYo9GnhNM']
+new row for relation "usuario" violates check constraint "usuario_nombre_check"
+DETAIL:  Failing row contains (261, Ryan", Pablo.ORyan@bbdduc.utopia, 56942270623, LQt0iVMSe/dTc, cliente).
+	['Ryan"', 'Pablo.ORyan@bbdduc.utopia', '56942270623', 'LQt0iVMSe/dTc']
+new row for relation "usuario" violates check constraint "usuario_nombre_check"
+DETAIL:  Failing row contains (262, Ryan", Pablo.ORyan@bbdduc.utopia, 56942270623, 80TZNadYMWdg., cliente).
+	['Ryan"', 'Pablo.ORyan@bbdduc.utopia', '56942270623', '80TZNadYMWdg.']
+new row for relation "usuario" violates check constraint "usuario_nombre_check"
+DETAIL:  Failing row contains (263, Ryan", Pablo.ORyan@bbdduc.utopia, 56942270623, uDung2Bm.UVZc, cliente).
+	['Ryan"', 'Pablo.ORyan@bbdduc.utopia', '56942270623', 'uDung2Bm.UVZc']
+Tabla Direccion:
+value too long for type character varying(30)
+	['Av. San Jose Maria Escriva de Balaguer', '5970', '13132']
+value too long for type character varying(30)
+	['Av. San Jose Maria Escriva de Balaguer', '5970', '13132']
+value too long for type character varying(30)
+	['Av. San Jose Maria Escriva de Balaguer', '5970', '13132']
+Tabla PlatoRestaurant:
+Tabla Pedido:
+Tabla Suscripcion:
+Tabla DespachadorEmpresa:
+Tabla ContenidoPedido:
+Tabla DireccionUsuario:
+Tabla ConvenioEmpresaRestaurant:
+Tabla Despacho:
+Tabla ServicioDespacho:
