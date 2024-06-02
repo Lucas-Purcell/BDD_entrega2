@@ -41,8 +41,24 @@ def restaurant():
                 cursor.execute(insert_query, row)
                 conn.commit()
             except(Exception, Error) as error:
-                error_msg.append([error, row])
-                conn.rollback()
+                if 'value too long for type character' in str(error):
+                    largo_columna = int(str(error).split(' ')[-1].replace('varying(', '').replace(')', ''))
+                    if len(row[-2]) > largo_columna:
+                        try:
+                            conn.rollback()
+                            row[-2] = row[-2][:2] + row[-2][3:]
+                            cursor.execute(insert_query, row)
+                            conn.commit()
+                        except (Exception, Error) as error:
+                            error_msg.append([error, row])
+                            conn.rollback()
+
+                    else:
+                        error_msg.append([error, row])
+                        conn.rollback()
+                else:
+                    error_msg.append([error, row])
+                    conn.rollback()
 
     except (Exception, Error) as error:
         error_msg.append(error)
