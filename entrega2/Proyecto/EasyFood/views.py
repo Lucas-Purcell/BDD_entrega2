@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db import connection
-from .consultas import consulta1, consulta3, consulta4, consulta5, consulta6, consulta8, consulta9, consulta10
+from .consultas import consulta1, consulta3, consulta4, consulta5, consulta6, consulta7, consulta8, consulta9, consulta10
 
 
 def home(request):
@@ -39,6 +39,9 @@ def consultas_predeterminadas(request):
         elif consulta == 6:
             query = consulta6()
             result, column_names = ejecutar_consulta(query, {'email': params.get('email')})
+        elif consulta == 7:
+            query = consulta7()
+            result, column_names = ejecutar_consulta(query)
         elif consulta == 8:
             query = consulta8()
             result, column_names = ejecutar_consulta(query)

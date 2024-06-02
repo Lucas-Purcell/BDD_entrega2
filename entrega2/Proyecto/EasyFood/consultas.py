@@ -92,6 +92,30 @@ def consulta6():
 
     return query
 
+# Muestre la suma de dinero gastada por cada cliente en pedidos no incluidas en planes de suscripcion
+
+def consulta7():
+    #query devuelve nombre, email y gasto total de los usuarios
+    query = """SELECT Usuario.nombre, Usuario.email, (SUM(gasto_pedido.precio_comida) + SUM(gasto_pedido.precio_despacho)) as gasto_total
+        FROM Usuario
+        JOIN (SELECT Pedido.id as pedido_id, Pedido.usuario_id, Empresa.id as empresa_id, Empresa.precio_despacho, SUM(Plato.precio * ContenidoPedido.cantidad) as precio_comida 
+            FROM Pedido
+            JOIN Despacho ON Despacho.pedido_id = Pedido.id
+            JOIN Empresa ON Despacho.empresa_id = Empresa.id
+            JOIN ContenidoPedido ON ContenidoPedido.pedido_id = Pedido.id
+            JOIN Plato ON ContenidoPedido.plato_id = Plato.id
+            JOIN Usuario ON Pedido.usuario_id = Usuario.id
+            LEFT JOIN Suscripcion ON Usuario.id = Suscripcion.usuario_id AND Empresa.id = Suscripcion.empresa_id
+            WHERE (Suscripcion.usuario_id IS NULL 
+                    OR (Suscripcion.ciclo = 'anual' AND Suscripcion.fecha_ultimo_pago < (NOW() - INTERVAL '1' YEAR) )  
+                    OR  (Suscripcion.ciclo = 'mensual' AND Suscripcion.fecha_ultimo_pago < (NOW() - INTERVAL '1' MONTH) ) )
+            AND Pedido.estado = 'entregado a cliente'  
+            GROUP BY Pedido.id, Pedido.usuario_id, Empresa.id, Empresa.precio_despacho) as gasto_pedido
+        ON Usuario.id = gasto_pedido.usuario_id
+        JOIN Pedido ON Pedido.id = gasto_pedido.pedido_id
+        GROUP BY Usuario.nombre, Usuario.email"""  
+    return query
+
 #Muestre todos los platos y los restaurantes que los ofrecen
 def consulta8():
     #query devuelve nombre del plato, nombre y sucursal del restaurante
