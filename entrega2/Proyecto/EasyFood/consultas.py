@@ -8,10 +8,73 @@ def consulta1():
         FROM Plato
         JOIN Platorestaurant ON Plato.id = Platorestaurant.plato_id 
         JOIN Restaurant ON Platorestaurant.restaurant_id = Restaurant.id
-        WHERE Plato.nombre = %(nombre)s 
+        WHERE Plato.nombre ILIKE %(nombre)s 
         AND Plato.disponibilidad = TRUE
         AND Restaurant.vigente = TRUE"""
     return query
+
+#Muestre todos los pedidos de un usuario específico ingresado (email string) y su gasto mensual (solo los pedidos concretados)
+def consulta2():
+    query = """SELECT Pedido.fecha, Pedido.estado
+        FROM Pedido
+        JOIN Usuario ON Pedido.usuario_id = Usuario.id
+        WHERE Usuario.email ILIKE %(email)s
+        ORDER BY Pedido.fecha DESC"""
+    
+    return query
+
+
+#Muestre todos los pedidos de un usuario específico ingresado (email string) y su gasto mensual (solo los pedidos concretados)
+def consulta2():
+    query = """SELECT Pedido.fecha, Pedido.estado
+        FROM Pedido
+        JOIN Usuario ON Pedido.usuario_id = Usuario.id
+        WHERE Usuario.email ILIKE %(email)s
+        ORDER BY Pedido.fecha DESC"""
+    
+    query1 = """SELECT month, year, gasto_mensual_pedido, SUM(suscripcion_mesual) as gasto_mensual_suscripciones, (gasto_mensual_pedido + SUM(suscripcion_mesual)) as gasto_mensual_total
+                FROM  (SELECT month, year, SUM(gasto_mensual_pedido) as gasto_mensual_pedido,
+                    CASE
+                        WHEN (Suscripcion.ciclo = 'anual' AND Suscripcion.fecha_ultimo_pago >= (TO_DATE(CONCAT(year, '/', month, '/', 1), 'YYYY/MM/DD') - INTERVAL '1' YEAR) AND Empresa.vigente = TRUE)  
+                        THEN Empresa.precio_anual / 12
+                        WHEN (Suscripcion.ciclo = 'mensual' AND Suscripcion.fecha_ultimo_pago >= (TO_DATE(CONCAT(year, '/', month, '/', 1), 'YYYY/MM/DD') - INTERVAL '1' MONTH) AND Empresa.vigente = TRUE)
+                        THEN Empresa.precio_mensual
+                        ELSE 0
+                    END AS suscripcion_mesual
+        FROM (SELECT month, year, SUM(gasto_pedido) as gasto_mensual_pedido, gasto_pedido.usuario_id
+                FROM (SELECT Pedido.id, gasto_pedido_comida.month, gasto_pedido_comida.year, (SUM(gasto_pedido_comida.precio_comida) + SUM(gasto_pedido_comida.precio_despacho)) as gasto_pedido, usuario.id as usuario_id
+                FROM Pedido
+                JOIN (SELECT Pedido.id as pedido_id, usuario.id as usuario_id,
+                        EXTRACT(YEAR FROM Pedido.fecha) as year,
+                        EXTRACT(MONTH FROM Pedido.fecha) as month,
+                        CASE
+                            WHEN (Suscripcion.ciclo = 'anual' AND Suscripcion.fecha_ultimo_pago >= (NOW() - INTERVAL '1' YEAR) AND Empresa.vigente = TRUE)  
+                            OR  (Suscripcion.ciclo = 'mensual' AND Suscripcion.fecha_ultimo_pago >= (NOW() - INTERVAL '1' MONTH) AND Empresa.vigente = TRUE)
+                            THEN 0
+                            ELSE Empresa.precio_despacho
+                        END AS precio_despacho,
+                        SUM(Plato.precio * ContenidoPedido.cantidad) as precio_comida
+                    FROM Pedido
+                    JOIN Despacho ON Despacho.pedido_id = Pedido.id
+                    JOIN Empresa ON Despacho.empresa_id = Empresa.id
+                    JOIN ContenidoPedido ON ContenidoPedido.pedido_id = Pedido.id
+                    JOIN Plato ON ContenidoPedido.plato_id = Plato.id
+                    JOIN Usuario ON Pedido.usuario_id = Usuario.id AND Usuario.email ILIKE %(email)s
+                    FULL OUTER JOIN Suscripcion ON Usuario.id = Suscripcion.usuario_id AND Suscripcion.empresa_id = Empresa.id
+                    WHERE Pedido.estado IN ('entregado a cliente')
+                    GROUP BY Pedido.id, precio_despacho, Empresa.vigente, suscripcion.ciclo, suscripcion.fecha_ultimo_pago, usuario.id) as gasto_pedido_comida
+                ON Pedido.id = gasto_pedido_comida.pedido_id
+                JOIN Usuario ON Pedido.usuario_id = Usuario.id
+                GROUP BY Pedido.id, gasto_pedido_comida.precio_comida, gasto_pedido_comida.precio_despacho, gasto_pedido_comida.month, gasto_pedido_comida.year, usuario.id
+                ORDER BY Pedido.id) as gasto_pedido
+            GROUP BY month, year, gasto_pedido.usuario_id) as gasto_mensual_pedido
+        JOIN Usuario ON Usuario.id = gasto_mensual_pedido.usuario_id
+        JOIN Suscripcion ON Usuario.id = Suscripcion.usuario_id
+        JOIN Empresa ON Suscripcion.empresa_id = Empresa.id
+        GROUP BY month, year, gasto_mensual_pedido, suscripcion.ciclo, suscripcion.fecha_ultimo_pago, empresa.vigente, empresa.precio_anual, empresa.precio_mensual) as gasto
+        GROUP BY year, month, gasto_mensual_pedido
+        """
+    return query, query1
 
 #Muestre todos pedidos concretados y cancelados y el valor total de ellos
 def consulta3():
@@ -34,7 +97,7 @@ def consulta3():
                 JOIN Usuario ON Pedido.usuario_id = Usuario.id
                 FULL OUTER JOIN Suscripcion ON Usuario.id = Suscripcion.usuario_id AND Suscripcion.empresa_id = Empresa.id
                 WHERE Pedido.estado IN ('entregado a cliente', 'Cliente cancela', 'delivery cancela', 'restaurant cancela')
-                GROUP BY Pedido.id, Empresa.precio_despacho, Empresa.vigente, suscripcion.ciclo, suscripcion.fecha_ultimo_pago, usuario.nombre, usuario.email) as gasto_pedido_comida
+                GROUP BY Pedido.id, precio_despacho, Empresa.vigente, suscripcion.ciclo, suscripcion.fecha_ultimo_pago, usuario.nombre, usuario.email) as gasto_pedido_comida
             ON Pedido.id = gasto_pedido_comida.pedido_id
             JOIN Usuario ON Pedido.usuario_id = Usuario.id
             GROUP BY Pedido.id, usuario.nombre, usuario.email, Pedido.estado, gasto_pedido_comida.precio_comida, gasto_pedido_comida.precio_despacho
@@ -54,7 +117,7 @@ def consulta4():
                     JOIN Empresa ON Empresa.id = ConvenioEmpresaRestaurant.empresa_id
                     WHERE Restaurant.vigente = TRUE
                     AND Empresa.vigente = TRUE) AS Res_em ON PlatoRestaurant.restaurant_id = Res_em.id_restaurant
-        WHERE Plato.estilo = %(estilo)s 
+        WHERE Plato.estilo ILIKE %(estilo)s 
         AND Plato.disponibilidad = TRUE
         ORDER BY nombre_plato, nombre_restaurant, sucursal, nombre_empresa"""
     
@@ -67,7 +130,7 @@ def consulta5():
         FROM Plato
         JOIN Platorestaurant ON Plato.id = Platorestaurant.plato_id 
         JOIN Restaurant ON Platorestaurant.restaurant_id = Restaurant.id
-        WHERE Plato.estilo = %(estilo)s 
+        WHERE Plato.estilo ILIKE %(estilo)s 
         AND Plato.disponibilidad = TRUE
         AND Restaurant.vigente = TRUE
         ORDER BY plato_nombre, restaurant_nombre, sucursal"""
@@ -83,7 +146,7 @@ def consulta6():
         JOIN Empresa ON Empresa.id = ConvenioEmpresaRestaurant.empresa_id
         JOIN Suscripcion ON Empresa.id = Suscripcion.empresa_id
         JOIN Usuario ON Suscripcion.usuario_id = Usuario.id
-        WHERE Usuario.email = %(email)s
+        WHERE Usuario.email ILIKE %(email)s
         AND Restaurant.vigente = TRUE
         AND Empresa.vigente = TRUE
         AND ( (Suscripcion.ciclo = 'anual' AND Suscripcion.fecha_ultimo_pago >= (NOW() - INTERVAL '1' YEAR) )  
@@ -167,7 +230,7 @@ def consulta10():
         FROM Plato
         JOIN Platorestaurant ON Plato.id = Platorestaurant.plato_id 
         JOIN Restaurant ON Platorestaurant.restaurant_id = Restaurant.id
-        WHERE Plato.ingredientes LIKE %(alergeno)s 
+        WHERE Plato.ingredientes ILIKE %(alergeno)s 
         AND Plato.disponibilidad = TRUE
         AND Restaurant.vigente = TRUE"""
     return query
