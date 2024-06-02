@@ -131,16 +131,12 @@
     </div>
 
     <!-- consulta 2 -->
-    <h2>2. Pedidos concretados por usuario específico durante mes espefícico y el gasto mensual</h2>
+    <h2>2. Pedidos de un usuario específico y el gasto mensual de los pedidos concretados</h2>
     <div class="query-form">
         <form method="post">
             {% csrf_token %}
             <label for="email">Ingrese email del usuario:</label>
             <input type="text" id="email" name="email" required>
-            <label for="men">Ingrese mes a consultar:</label>
-            <input type="text" id="mes" name="mes" required>
-            <label for="anho">Ingrese año a consultar:</label>
-            <input type="text" id="anho" name="anho" required>
             <button type="submit" name="query" value="2">Ejecutar Consulta</button>
         </form>
     </div>
@@ -183,7 +179,7 @@
             {% csrf_token %}
             <label for="email">Ingrese email del usuario:</label>
             <input type="text" id="email" name="email" required>
-            <button type="submit" name="query" value="5">Ejecutar Consulta</button>
+            <button type="submit" name="query" value="6">Ejecutar Consulta</button>
         </form>
     </div>
 
@@ -255,7 +251,26 @@
     </table>
     {% endif %}
 
-</div>
-
+    {% if results1 %}
+        <h2>Resultados:</h2>
+        <table>
+            <thead>
+                <tr>
+                    {% for column in column_names1 %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in results1 %}
+                    <tr>
+                        {% for cell in row %}
+                            <td>{{ cell }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 </body>
 </html>
