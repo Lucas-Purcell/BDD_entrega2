@@ -51,10 +51,6 @@
             background-color: #ddd;
             color: black;
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> branch-lucas
         .query-form {
             text-align: center;
             margin-bottom: 20px;
@@ -102,11 +98,7 @@
             border: 1px solid #ddd;
         }
 
-<<<<<<< HEAD
-        h, td {
-=======
         th, td {
->>>>>>> branch-lucas
             padding: 10px;
             text-align: left;
         }
@@ -114,13 +106,6 @@
         th {
             background-color: #f2f2f2;
         }
-<<<<<<< HEAD
-    </style>
-
-</head>
-<body>
-    
-=======
 
         .form-group {
             margin-bottom: 20px;
@@ -147,7 +132,6 @@
     </style>
 </head>
 <body>
->>>>>>> branch-lucas
     <div class="navbar">
         <a href="/">Home</a>
         <a href="/consultas_predeterminadas">Consultas Predeterminadas</a>
@@ -156,21 +140,13 @@
 
     <div class="container">
         <h1 class="mt-5">Consulta Inestructuradas</h1>
-<<<<<<< HEAD
-        <form method="POST" class="mt-3">
-=======
         <form method="POST" class="mt-3 query-form">
->>>>>>> branch-lucas
             {% csrf_token %}
             <div class="form-group">
                 <label for="atributos">Atributos</label>
                 {{ form.atributos }}
             </div>
             <div class="form-group">
-<<<<<<< HEAD
-
-=======
->>>>>>> branch-lucas
                 <label for="tablas">Tablas</label>
                 {{ form.tablas }}
             </div>
@@ -183,13 +159,8 @@
 
         {% if error_message %}
         <div class="alert alert-danger mt-3">{{ error_message }}</div>
-<<<<<<< HEAD
-    {% endif %}
-    {% if resultados %}
-=======
         {% endif %}
         {% if resultados %}
->>>>>>> branch-lucas
         <h2 class="mt-5">Resultados</h2>
         <p>Consulta ejecutada: {{ query }}</p>
         <table class="table table-striped">
@@ -210,14 +181,7 @@
                 {% endfor %}
             </tbody>
         </table>
-<<<<<<< HEAD
-    {% endif %}
-    </div>
-</body>
-</html>
-=======
         {% endif %}
     </div>
 </body>
 </html>
->>>>>>> branch-lucas
