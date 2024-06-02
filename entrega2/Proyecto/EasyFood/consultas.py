@@ -89,8 +89,7 @@ def consulta6():
         AND ( (Suscripcion.ciclo = 'anual' AND Suscripcion.fecha_ultimo_pago >= (NOW() - INTERVAL '1' YEAR) )  
         OR  (Suscripcion.ciclo = 'mensual' AND Suscripcion.fecha_ultimo_pago >= (NOW() - INTERVAL '1' MONTH) ) )
         ORDER BY nombre_restaurant, sucursal, nombre_empresa, tipo_suscripcion"""
-    
-    
+
     return query
 
 #Muestre todos los platos y los restaurantes que los ofrecen
