@@ -15,7 +15,6 @@ def comuna():
 
 
     try:
-        # Conexión con la base de datos
         conn = psycopg2.connect(
             user=DB_USER,
             password=DB_PASSWORD,
@@ -23,16 +22,13 @@ def comuna():
             port=DB_PORT,
             dbname=DB_NAME
         )
-        # Crear un cursor para ejecutar consultas
         cursor = conn.cursor()
 
-        # Abrir CSV
         with open('../CSV/comuna2.csv', 'r', encoding = 'mac_roman') as file:
             data = file.read().split('\n')
             df = []
             for line in data[1:]:
                 df.append(line.split(';'))
-            # Insertar datos en la tabla
         for row in df:
             try:
                 insert_query = """INSERT INTO Comuna (cut,nombre,provincia,region) 

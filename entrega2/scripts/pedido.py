@@ -22,7 +22,6 @@ def pedido():
         port=DB_PORT,
         dbname=DB_NAME
         )
-        # Crear un cursor para ejecutar consultas
         cursor = conn.cursor()
 
         with open('../CSV/pedidos2.csv', 'r', encoding = 'ISO-8859-1') as file:
@@ -73,7 +72,6 @@ def pedido():
         port=DB_PORT,
         dbname=DB_NAME
         )
-        # Crear un cursor para ejecutar consultas
         cursor = conn.cursor()
 
         with open('../CSV/calificacion.csv', 'r', encoding = 'ISO-8859-1') as file:

@@ -15,7 +15,6 @@ def restaurant():
     error_msg = ["Tabla Restaurant:"]
 
     try:
-        # Conexión con la base de datos
         conn = psycopg2.connect(
             user=DB_USER,
             password=DB_PASSWORD,
@@ -23,16 +22,13 @@ def restaurant():
             port=DB_PORT,
             dbname=DB_NAME
         )
-        # Crear un cursor para ejecutar consultas
         cursor = conn.cursor()
 
-        # Abrir CSV
         with open('../CSV/restaurantes2.csv', 'r',encoding= 'mac_roman') as file:
             data = file.read().replace('√©', 'é').replace('√°', 'á').split('\n')
             df = []
             for line in data[1:]:
                 df.append(line.split(';'))
-            # Insertar datos en la tabla
         
         for row in df:
             try:
@@ -41,8 +37,24 @@ def restaurant():
                 cursor.execute(insert_query, row)
                 conn.commit()
             except(Exception, Error) as error:
-                error_msg.append([error, row])
-                conn.rollback()
+                if 'value too long for type character' in str(error):
+                    largo_columna = int(str(error).split(' ')[-1].replace('varying(', '').replace(')', ''))
+                    if len(row[-2]) > largo_columna:
+                        try:
+                            conn.rollback()
+                            row[-2] = row[-2][:2] + row[-2][3:]
+                            cursor.execute(insert_query, row)
+                            conn.commit()
+                        except (Exception, Error) as error:
+                            error_msg.append([error, row])
+                            conn.rollback()
+
+                    else:
+                        error_msg.append([error, row])
+                        conn.rollback()
+                else:
+                    error_msg.append([error, row])
+                    conn.rollback()
 
     except (Exception, Error) as error:
         error_msg.append(error)

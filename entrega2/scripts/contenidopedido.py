@@ -41,7 +41,7 @@ def contenidoPedido():
                                         VALUES (%s, %s);
                                         """
                     
-                    cursor.execute(insert_query, (row[0], pid))  # Passing the list of IDs directly
+                    cursor.execute(insert_query, (row[0], pid))  
                     conn.commit()
 
                 except (Exception, Error) as error:

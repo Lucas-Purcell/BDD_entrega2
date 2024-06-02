@@ -15,7 +15,6 @@ def plato():
     error_msg = ["Tabla Plato:"]
 
     try:
-        # Conexión con la base de datos
         conn = psycopg2.connect(
             user=DB_USER,
             password=DB_PASSWORD,
@@ -23,16 +22,13 @@ def plato():
             port=DB_PORT,
             dbname=DB_NAME
         )
-        # Crear un cursor para ejecutar consultas
         cursor = conn.cursor()
 
-        # Abrir CSV
         with open('../CSV/platos.csv', 'r', encoding = 'ISO-8859-1') as file:
             data = file.read().split('\n')
             df = []
             for line in data[1:]:
                 df.append(line.split(';')[:-3])
-            # Insertar datos en la tabla
         for row in df:
             try:
                 insert_query = """INSERT INTO Plato (id,nombre,descripcion,disponibilidad,estilo,restriccion,ingredientes,porciones,precio,tiempo) 

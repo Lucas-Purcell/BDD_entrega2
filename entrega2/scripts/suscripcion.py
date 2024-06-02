@@ -22,7 +22,6 @@ def suscripcion():
             port=DB_PORT,
             dbname=DB_NAME
         )
-        # Crear un cursor para ejecutar consultas
         cursor = conn.cursor()
         cursor.execute("SET DateStyle = 'ISO, DMY';")
         with open('../CSV/suscripciones.csv', 'r', encoding = 'ISO-8859-1') as file:
