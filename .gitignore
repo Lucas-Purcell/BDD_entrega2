@@ -30,7 +30,43 @@ __pycache__
 
 # Ignore dependencies
 <<<<<<< HEAD
+<<<<<<< HEAD
 node_modules/
 =======
 node_modules/
 >>>>>>> 13286cf (avance)
+=======
+node_modules/
+# Ignore Python byte-compiled files
+*.pyc
+__pycache__
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore environment-specific files
+.env
+
+# Ignore compiled files
+*.exe
+*.o
+*.out
+*.dll
+
+# Ignore log files
+*.log
+
+# Ignore package files
+*.zip
+*.tar.gz
+
+# Ignore database files
+*.db
+
+# Ignore IDE or editor-specific files
+.vscode/
+.idea/
+
+# Ignore dependencies
+node_modules/
+>>>>>>> 27a698b (merge)
