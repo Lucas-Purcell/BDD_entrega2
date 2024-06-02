@@ -21,17 +21,6 @@ def consulta2():
         WHERE Usuario.email ILIKE %(email)s
         ORDER BY Pedido.fecha DESC"""
     
-    return query
-
-
-#Muestre todos los pedidos de un usuario específico ingresado (email string) y su gasto mensual (solo los pedidos concretados)
-def consulta2():
-    query = """SELECT Pedido.fecha, Pedido.estado
-        FROM Pedido
-        JOIN Usuario ON Pedido.usuario_id = Usuario.id
-        WHERE Usuario.email ILIKE %(email)s
-        ORDER BY Pedido.fecha DESC"""
-    
     query1 = """SELECT month, year, gasto_mensual_pedido, SUM(suscripcion_mesual) as gasto_mensual_suscripciones, (gasto_mensual_pedido + SUM(suscripcion_mesual)) as gasto_mensual_total
                 FROM  (SELECT month, year, SUM(gasto_mensual_pedido) as gasto_mensual_pedido,
                     CASE
