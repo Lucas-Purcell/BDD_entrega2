@@ -5,24 +5,18 @@ Tabla Empresa:
 Tabla Despachador:
 Tabla Usuario:
 new row for relation "usuario" violates check constraint "usuario_nombre_check"
-DETAIL:  Failing row contains (260, Ryan", Pablo.ORyan@bbdduc.utopia, 56942270623, .MGTHYo9GnhNM, cliente).
-	['Ryan"', 'Pablo.ORyan@bbdduc.utopia', '56942270623', '.MGTHYo9GnhNM']
+DETAIL:  Failing row contains (260, Ryan", Pablo.ORyan@bbdduc.utopia, 56942270623, v9bUI8Fqc7kIg, cliente).
+	['Ryan"', 'Pablo.ORyan@bbdduc.utopia', '56942270623', 'v9bUI8Fqc7kIg']
 new row for relation "usuario" violates check constraint "usuario_nombre_check"
-DETAIL:  Failing row contains (261, Ryan", Pablo.ORyan@bbdduc.utopia, 56942270623, LQt0iVMSe/dTc, cliente).
-	['Ryan"', 'Pablo.ORyan@bbdduc.utopia', '56942270623', 'LQt0iVMSe/dTc']
+DETAIL:  Failing row contains (261, Ryan", Pablo.ORyan@bbdduc.utopia, 56942270623, YKFzcr5P.iZP6, cliente).
+	['Ryan"', 'Pablo.ORyan@bbdduc.utopia', '56942270623', 'YKFzcr5P.iZP6']
 new row for relation "usuario" violates check constraint "usuario_nombre_check"
-DETAIL:  Failing row contains (262, Ryan", Pablo.ORyan@bbdduc.utopia, 56942270623, 80TZNadYMWdg., cliente).
-	['Ryan"', 'Pablo.ORyan@bbdduc.utopia', '56942270623', '80TZNadYMWdg.']
+DETAIL:  Failing row contains (262, Ryan", Pablo.ORyan@bbdduc.utopia, 56942270623, M2F9GhIvXy/5c, cliente).
+	['Ryan"', 'Pablo.ORyan@bbdduc.utopia', '56942270623', 'M2F9GhIvXy/5c']
 new row for relation "usuario" violates check constraint "usuario_nombre_check"
-DETAIL:  Failing row contains (263, Ryan", Pablo.ORyan@bbdduc.utopia, 56942270623, uDung2Bm.UVZc, cliente).
-	['Ryan"', 'Pablo.ORyan@bbdduc.utopia', '56942270623', 'uDung2Bm.UVZc']
+DETAIL:  Failing row contains (263, Ryan", Pablo.ORyan@bbdduc.utopia, 56942270623, Wk57JvM50j8PM, cliente).
+	['Ryan"', 'Pablo.ORyan@bbdduc.utopia', '56942270623', 'Wk57JvM50j8PM']
 Tabla Direccion:
-value too long for type character varying(30)
-	['Av. San Jose Maria Escriva de Balaguer', '5970', '13132']
-value too long for type character varying(30)
-	['Av. San Jose Maria Escriva de Balaguer', '5970', '13132']
-value too long for type character varying(30)
-	['Av. San Jose Maria Escriva de Balaguer', '5970', '13132']
 Tabla PlatoRestaurant:
 Tabla Pedido:
 Tabla Suscripcion:

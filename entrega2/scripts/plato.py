@@ -41,7 +41,7 @@ def plato():
                     if len(row[1]) > largo_columna:
                         try:
                             conn.rollback()
-                            cursor.execute("ALTER TABLE Plato ALTER COLUMN nombre TYPE VARCHAR(%s) NOT NULL", [len(row[1])])
+                            cursor.execute("""ALTER TABLE Plato ALTER COLUMN nombre TYPE VARCHAR(%s);""", [len(row[1])])
                             cursor.execute(insert_query, row)
                             conn.commit()
                         except (Exception, Error) as error:

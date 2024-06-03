@@ -46,7 +46,7 @@ def direccion():
                     if len(row[0]) > largo_columna:
                         try:
                             conn.rollback()
-                            cursor.execute("ALTER TABLE Direccion ALTER COLUMN calle TYPE VARCHAR(%s) NOT NULL", [len(row[1])])
+                            cursor.execute("""ALTER TABLE Direccion ALTER COLUMN calle TYPE VARCHAR(%s);""", [len(row[0])])
                             cursor.execute(insert_query, row)
                             conn.commit()
                         except (Exception, Error) as error:
